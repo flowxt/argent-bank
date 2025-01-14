@@ -6,25 +6,35 @@ export const login = (credentials) => async (dispatch) => {
     const response = await axios.post(
       "http://localhost:3001/api/v1/user/login",
       {
-        email: credentials.username, // Assurez-vous que le champ correspond à ce que le serveur attend
+        email: credentials.email,
         password: credentials.password,
       }
     );
     const { token } = response.data.body;
     localStorage.setItem("token", token);
     localStorage.setItem("isAuthenticated", "true");
-    // Vous pouvez également stocker d'autres informations utilisateur si nécessaire
-    dispatch(loginSuccess({ userName: credentials.username })); // Utilisez le nom d'utilisateur ou d'autres informations si disponibles
-    return Promise.resolve(); // Retourne une promesse résolue pour permettre la redirection
+
+    // Faire une deuxième requête pour récupérer les informations de l'utilisateur
+    const userResponse = await axios.post(
+      "http://localhost:3001/api/v1/user/profile",
+      {},
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    const { firstName, lastName } = userResponse.data.body;
+    localStorage.setItem("firstName", firstName);
+    localStorage.setItem("lastName", lastName);
+    dispatch(loginSuccess({ firstName, lastName }));
+    return Promise.resolve();
   } catch (error) {
     console.error("Login failed:", error);
-    return Promise.reject(); // Retourne une promesse rejetée en cas d'erreur
+    return Promise.reject();
   }
 };
 
 export const logoutUser = () => (dispatch) => {
   localStorage.removeItem("isAuthenticated");
-  localStorage.removeItem("userName");
+  localStorage.removeItem("firstName");
+  localStorage.removeItem("lastName");
   localStorage.removeItem("token");
   dispatch(logout());
 };

@@ -24,7 +24,7 @@ const Navbar = () => {
         {isAuthenticated ? (
           <>
             <span className='main-nav-item'>
-              {firstName} {lastName}
+              <i className="fa fa-user-circle"></i> {firstName}
             </span>
             <button className='main-nav-item' onClick={handleLogout}>
               <i className="fa fa-sign-out"></i> Sign Out

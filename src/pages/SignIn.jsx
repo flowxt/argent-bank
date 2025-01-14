@@ -4,15 +4,15 @@ import { useNavigate } from 'react-router-dom';
 import { login } from '../actions/authActions';
 
 const SignIn = () => {
-  const [credentials, setCredentials] = useState({ username: '', password: '' });
+  const [credentials, setCredentials] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!credentials.username || !credentials.password) {
-      setError('Please enter both username and password');
+    if (!credentials.email || !credentials.password) {
+      setError('Please enter both email and password');
       return;
     }
     dispatch(login(credentials)).then(() => {
@@ -29,12 +29,12 @@ const SignIn = () => {
         <h1>Sign In</h1>
         <form onSubmit={handleSubmit}>
           <div className="input-wrapper">
-            <label htmlFor="username">Username</label>
+            <label htmlFor="email">Email</label>
             <input
-              type="text"
-              id="username"
-              value={credentials.username}
-              onChange={(e) => setCredentials({ ...credentials, username: e.target.value })}
+              type="email"
+              id="email"
+              value={credentials.email}
+              onChange={(e) => setCredentials({ ...credentials, email: e.target.value })}
             />
           </div>
           <div className="input-wrapper">

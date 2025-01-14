@@ -3,12 +3,13 @@ import { useSelector } from 'react-redux';
 import Account from '../components/Account';
 
 const UserDashboard = () => {
-  const userName = useSelector((state) => state.auth.userName);
+  const firstName = useSelector((state) => state.auth.firstName);
+  const lastName = useSelector((state) => state.auth.lastName);
 
   return (
     <main className='main bg-dark'>
       <div className='header'>
-        <h1>Welcome back <br />{userName}!</h1>
+        <h1>Welcome back <br />{firstName} {lastName}!</h1>
         <button className='edit-button'>Edit Name</button>    
       </div>
       <section>
