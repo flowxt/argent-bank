@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -8,6 +7,7 @@ import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import SignIn from './pages/SignIn';
 import UserDashboard from './pages/UserDashboard';
+import PrivateRoute from './components/PrivateRoute';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 const App = () => {
@@ -19,7 +19,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/sign-in" element={<SignIn />} />
-            <Route path="/user" element={<UserDashboard />} />
+            <Route path="/user" element={<PrivateRoute><UserDashboard /></PrivateRoute>} />
           </Routes>
           <Footer />
         </div>

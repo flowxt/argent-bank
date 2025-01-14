@@ -10,12 +10,15 @@ export const login = (credentials) => async (dispatch) => {
         password: credentials.password,
       }
     );
-    localStorage.setItem("token", response.data.body.token);
+    const { token } = response.data.body;
+    localStorage.setItem("token", token);
     localStorage.setItem("isAuthenticated", "true");
-    localStorage.setItem("userName", response.data.body.user.name);
-    dispatch(loginSuccess({ userName: response.data.body.user.name }));
+    // Vous pouvez également stocker d'autres informations utilisateur si nécessaire
+    dispatch(loginSuccess({ userName: credentials.username })); // Utilisez le nom d'utilisateur ou d'autres informations si disponibles
+    return Promise.resolve(); // Retourne une promesse résolue pour permettre la redirection
   } catch (error) {
     console.error("Login failed:", error);
+    return Promise.reject(); // Retourne une promesse rejetée en cas d'erreur
   }
 };
 
