@@ -20,8 +20,13 @@ const authSlice = createSlice({
       state.firstName = "";
       state.lastName = "";
     },
+    updateUserProfileSuccess: (state, action) => {
+      state.firstName = action.payload.firstName;
+      state.lastName = action.payload.lastName;
+    },
   },
 });
 
-export const { loginSuccess, logout } = authSlice.actions;
+export const { loginSuccess, logout, updateUserProfileSuccess } =
+  authSlice.actions;
 export default authSlice.reducer;

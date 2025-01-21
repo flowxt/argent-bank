@@ -1,16 +1,42 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import Account from '../components/Account';
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { updateUserProfile } from "../actions/userActions";
+import Account from "../components/Account";
 
 const UserDashboard = () => {
   const firstName = useSelector((state) => state.auth.firstName);
   const lastName = useSelector((state) => state.auth.lastName);
+  const [isEditing, setIsEditing] = useState(false);
+  const [newFirstName, setNewFirstName] = useState(firstName);
+  const [newLastName, setNewLastName] = useState(lastName);
+  const dispatch = useDispatch();
+
+  const handleSave = () => {
+    dispatch(updateUserProfile({ firstName: newFirstName, lastName: newLastName }));
+    setIsEditing(false);
+  };
 
   return (
     <main className='main bg-dark'>
       <div className='header'>
         <h1>Welcome back <br />{firstName} {lastName}!</h1>
-        <button className='edit-button'>Edit Name</button>    
+        {isEditing ? (
+          <div>
+            <input
+              type="text"
+              value={newFirstName}
+              onChange={(e) => setNewFirstName(e.target.value)}
+            />
+            <input
+              type="text"
+              value={newLastName}
+              onChange={(e) => setNewLastName(e.target.value)}
+            />
+            <button onClick={handleSave}>Save</button>
+          </div>
+        ) : (
+          <button className='edit-button' onClick={() => setIsEditing(true)}>Edit Name</button>
+        )}
       </div>
       <section>
         <Account 
