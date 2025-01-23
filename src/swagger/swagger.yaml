@@ -1,0 +1,191 @@
+# Contient les informations generales de l'API
+openapi: 3.0.0
+info:
+  title: Argent Bank API
+  version: 1.0.0
+
+# Paths : Définit les endpoints de l'API.
+paths:
+  /transactions:
+    get:
+      summary: Get all transactions for the current month
+      description: Retrieve all transactions for the current month, grouped by account.
+      responses:
+        "200":
+          description: A list of transactions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Transaction"
+              examples:
+                example-1:
+                  value:
+                    [
+                      {
+                        id: "1",
+                        amount: 100.0,
+                        date: "2023-10-01T00:00:00Z",
+                        description: "Grocery shopping",
+                        accountId: "123",
+                      },
+                      {
+                        id: "2",
+                        amount: 50.0,
+                        date: "2023-10-02T00:00:00Z",
+                        description: "Gas",
+                        accountId: "123",
+                      },
+                    ]
+    post:
+      summary: Add a new transaction
+      description: Create a new transaction.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Transaction"
+            examples:
+              example-1:
+                value:
+                  {
+                    amount: 100.0,
+                    date: "2023-10-01T00:00:00Z",
+                    description: "Grocery shopping",
+                    accountId: "123",
+                  }
+      responses:
+        "201":
+          description: Transaction created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Transaction"
+              examples:
+                example-1:
+                  value:
+                    {
+                      id: "1",
+                      amount: 100.0,
+                      date: "2023-10-01T00:00:00Z",
+                      description: "Grocery shopping",
+                      accountId: "123",
+                    }
+        "400":
+          description: Invalid input
+  /transactions/{id}:
+    get:
+      summary: Get transaction by ID
+      description: Retrieve a transaction by its ID.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: The transaction ID
+      responses:
+        "200":
+          description: A single transaction
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Transaction"
+              examples:
+                example-1:
+                  value:
+                    {
+                      id: "1",
+                      amount: 100.0,
+                      date: "2023-10-01T00:00:00Z",
+                      description: "Grocery shopping",
+                      accountId: "123",
+                    }
+        "404":
+          description: Transaction not found
+    put:
+      summary: Update a transaction
+      description: Update an existing transaction by its ID.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: The transaction ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Transaction"
+            examples:
+              example-1:
+                value:
+                  {
+                    amount: 150.0,
+                    date: "2023-10-01T00:00:00Z",
+                    description: "Grocery shopping - updated",
+                    accountId: "123",
+                  }
+      responses:
+        "200":
+          description: Transaction updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Transaction"
+              examples:
+                example-1:
+                  value:
+                    {
+                      id: "1",
+                      amount: 150.0,
+                      date: "2023-10-01T00:00:00Z",
+                      description: "Grocery shopping - updated",
+                      accountId: "123",
+                    }
+        "404":
+          description: Transaction not found
+        "400":
+          description: Invalid input
+    delete:
+      summary: Delete a transaction
+      description: Delete a transaction by its ID.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: The transaction ID
+      responses:
+        "204":
+          description: Transaction deleted
+        "404":
+          description: Transaction not found
+
+          # Definit les schemas utilisés dans les endpoints de l'API.
+components:
+  schemas:
+    Transaction:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier for the transaction
+        amount:
+          type: number
+          description: The amount of the transaction
+        date:
+          type: string
+          format: date-time
+          description: The date and time when the transaction occurred
+        description:
+          type: string
+          description: A brief description of the transaction
+        accountId:
+          type: string
+          description: The ID of the account associated with the transaction

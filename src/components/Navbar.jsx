@@ -8,7 +8,6 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const firstName = useSelector((state) => state.auth.firstName);
-  const lastName = useSelector((state) => state.auth.lastName);
 
   const handleLogout = () => {
     dispatch(logoutUser());
@@ -23,9 +22,9 @@ const Navbar = () => {
       <div>
         {isAuthenticated ? (
           <>
-            <span className='main-nav-item'>
+            <Link className='main-nav-item' to="/user">
               <i className="fa fa-user-circle"></i> {firstName}
-            </span>
+            </Link>
             <button className='main-nav-item' onClick={handleLogout}>
               <i className="fa fa-sign-out"></i> Sign Out
             </button>

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { loginSuccess, logout } from "../reducers/authReducer";
 
-export const login = (credentials) => async (dispatch) => {
+export const login = (credentials, rememberMe) => async (dispatch) => {
   try {
     const response = await axios.post(
       "http://localhost:3001/api/v1/user/login",
@@ -14,6 +14,11 @@ export const login = (credentials) => async (dispatch) => {
     localStorage.setItem("token", token);
     localStorage.setItem("isAuthenticated", "true");
 
+    if (rememberMe) {
+      localStorage.setItem("rememberMe", "true");
+    } else {
+      localStorage.removeItem("rememberMe");
+    }
     // Faire une deuxième requête pour récupérer les informations de l'utilisateur
     const userResponse = await axios.post(
       "http://localhost:3001/api/v1/user/profile",
@@ -36,5 +41,6 @@ export const logoutUser = () => (dispatch) => {
   localStorage.removeItem("firstName");
   localStorage.removeItem("lastName");
   localStorage.removeItem("token");
+  localStorage.removeItem("rememberMe");
   dispatch(logout());
 };

@@ -5,6 +5,7 @@ import { login } from '../actions/authActions';
 
 const SignIn = () => {
   const [credentials, setCredentials] = useState({ email: '', password: '' });
+  const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ const SignIn = () => {
       setError('Please enter both email and password');
       return;
     }
-    dispatch(login(credentials)).then(() => {
+    dispatch(login(credentials, rememberMe)).then(() => {
       navigate('/user'); // Redirige vers le tableau de bord utilisateur après connexion réussie
     }).catch((err) => {
       setError('Login failed. Please check your credentials and try again.');
@@ -47,7 +48,12 @@ const SignIn = () => {
             />
           </div>
           <div className="input-remember">
-            <input type="checkbox" id="remember-me" />
+            <input
+              type="checkbox"
+              id="remember-me"
+              checked={rememberMe}
+              onChange={(e) => setRememberMe(e.target.checked)}
+            />
             <label htmlFor="remember-me">Remember me</label>
           </div>
           {error && <p className="error-message">{error}</p>}
