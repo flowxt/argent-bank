@@ -6,6 +6,7 @@ import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import SignIn from './pages/SignIn';
 import UserDashboard from './pages/UserDashboard';
+import TransactionsPage from './pages/TransactionsPage';
 import PrivateRoute from './components/PrivateRoute';
 import { loginSuccess } from './reducers/authReducer';
 import '@fortawesome/fontawesome-free/css/all.min.css';
@@ -32,6 +33,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/sign-in" element={isAuthenticated ? <Navigate to="/user" /> : <SignIn />} />
           <Route path="/user" element={<PrivateRoute><UserDashboard /></PrivateRoute>} />
+          <Route path="/transactions/:accountId" element={<PrivateRoute><TransactionsPage /></PrivateRoute>} />
         </Routes>
         <Footer />
       </BrowserRouter>

@@ -125,6 +125,16 @@ html {
     }
   }
   
+.hero-transactions {
+    background-color: #e8eceb00;
+    color: rgb(22, 22, 22);
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 5px;
+    text-align: center;
+    border-color: 1px solid #9c9898;
+  }
+
   .features {
     display: flex;
     flex-direction: column;
@@ -317,6 +327,45 @@ html {
     border-color: #00bc77;
     background-color: #00bc77;
     color: #fff;
+    text-decoration: none;
+    text-align: center;
+  }
+
+
+
+  
+  .transactions-table {
+    width: 100%;
+    margin: 20px auto;
+    border-collapse: collapse;
+  }
+  
+  .transactions-table table {
+    width: 100%;
+    border: 1px solid #ddd;
+  }
+  
+  .transactions-table th, .transactions-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .transactions-table th {
+    background-color: #f4f4f4;
+  }
+  
+  .transaction-details {
+    background-color: #f9f9f9;
+  }
+  
+  .transaction-details p {
+    margin: 5px 0;
+  }
+  
+  .transaction-details i {
+    cursor: pointer;
+    margin-left: 10px;
   }
   
   @media (min-width: 720px) {

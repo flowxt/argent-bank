@@ -15,6 +15,7 @@ const UserDashboard = () => {
     dispatch(updateUserProfile({ firstName: newFirstName, lastName: newLastName }));
     setIsEditing(false);
   };
+
   const handleCancel = () => {
     setNewFirstName(firstName);
     setNewLastName(lastName);
