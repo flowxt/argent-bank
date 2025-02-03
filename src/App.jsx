@@ -19,9 +19,16 @@ const App = () => {
     const token = localStorage.getItem("token");
     const rememberMe = localStorage.getItem("rememberMe") === "true";
     if (token && rememberMe) {
-      const firstName = localStorage.getItem("firstName");
-      const lastName = localStorage.getItem("lastName");
-      dispatch(loginSuccess({ firstName, lastName }));
+      axios.post(
+        "http://localhost:3001/api/v1/user/profile",
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      ).then(response => {
+        const { firstName, lastName } = response.data.body;
+        dispatch(loginSuccess({ firstName, lastName, token }));
+      }).catch(error => {
+        console.error("Failed to fetch user profile:", error);
+      });
     }
   }, [dispatch]);
 
