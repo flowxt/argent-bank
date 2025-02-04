@@ -68,7 +68,6 @@ paths:
       parameters:
         - in: header
           name: Authorization
-          type: string
           description: Attach Bearer JWT token
           required: true
       produces:
@@ -82,17 +81,16 @@ paths:
           description: Invalid Fields
         "500":
           description: Internal Server Error
-    patch:
+    put:
       security:
         - Bearer: []
       tags:
         - User Module
-      summary: Update User Profile API
+      summary: User Profile API
       description: API for updating a user profile
       parameters:
         - in: header
           name: Authorization
-          type: string
           description: Attach Bearer JWT token
           required: true
         - in: body
@@ -105,7 +103,7 @@ paths:
         - application/json
       responses:
         "200":
-          description: User profile updated successfully
+          description: User profile retrieved successfully
           schema:
             $ref: "#/definitions/ApiResponse"
         "400":
@@ -224,7 +222,6 @@ securityDefinitions:
     in: header
 definitions:
   User:
-    type: object
     properties:
       email:
         type: string
@@ -239,7 +236,6 @@ definitions:
         type: string
         description: user last name
   Login:
-    type: object
     properties:
       email:
         type: string
@@ -278,29 +274,21 @@ definitions:
     properties:
       id:
         type: string
-        description: The unique identifier for the transaction
       amount:
         type: number
-        description: The amount of the transaction
       date:
         type: string
         format: date-time
-        description: The date and time when the transaction occurred
       description:
         type: string
-        description: A brief description of the transaction
       category:
         type: string
-        description: The category of the transaction
       accountId:
         type: string
-        description: The ID of the account associated with the transaction
   TransactionUpdate:
     type: object
     properties:
       description:
         type: string
-        description: A brief description of the transaction
       category:
         type: string
-        description: The category of the transaction
